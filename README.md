@@ -25,7 +25,8 @@ Main paths:
 - Add error handler middlewares (authentication middlewares can be delayed till we reach that lecture).
 3. Create controller folder and the controller file for each route. Add request handlers of each route to it's controller file.
 4. Create ERD diagram
-5. Set up Mongo DB in your project and create all the mongoose schema according to your ERD diagram
+5. Set up Mongo DB in your project and create all the mongoose schema according to your ERD diagram. You can use local mongodb for development, but in production, switch to Mongo Atlas
 6. Create a separate services folder and create service file for each schema. The service file will contains expensive functions which interact with MongoDB. Later on in controller, we will import the functions there and use.
-7. Add authentication middleware using passport, google and jwt strategy
-8. Add tests for your controllers and services. Remember to create the jwt token for your tests, because if your controller is protected, then the test should send the token also
+7. Add authentication middleware using passport, google and jwt strategy.
+8. Add tests for your controllers and services. Remember to create the jwt token for your tests, because if your controller is protected, then the test should send the token also.
+9. When your project is about to complete, deploy it to online platform of your choice. Rewrite the README.md file with your own introduction, tech stack, project details, contributors, and link to the online demo.
