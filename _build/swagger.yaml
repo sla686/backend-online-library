@@ -5,9 +5,9 @@ servers:
   - description: SwaggerHub API
     url: HTTPS
 info:
-  description: This is a simple API
+  description: Library API
   version: 1.0.0
-  title: Simple Inventory API
+  title: Simple library API
   contact:
     email: you@your-company.com
   license:
@@ -23,11 +23,11 @@ paths:
     get:
       tags:
         - developers
-      summary: searches inventory
-      operationId: searchInventory
+      summary: get admin user
+      operationId: getAdminUser
       description: |
         By passing in the appropriate options, you can search for
-        available inventory in the system
+        available admins in system
       security:
         BearerAuth: []
       parameters:
@@ -60,26 +60,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  required:
-                    - id
-                    - firstname
-                    - lastname
-                    - email
-                  properties:
-                    id:
-                      type: string
-                      format: uuid
-                      example: d290f1ee-6c54-4b01-90e6-d701748f0851
-                    firstname:
-                      type: string
-                      example: Johnny
-                    lastname:
-                      type: string
-                      example: nylund
-                    email:
-                      type: string
-                      example: you@company.com
+                  $ref: '#/components/schemas/User%20Item'
         '400':
           description: bad input parameter
     post:
@@ -143,7 +124,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/paths/~1books/post/requestBody/content/application~1json/schema'
+                  $ref: '#/paths/~1books~1%7BbookId%7D/get/200/content/application~1json/schema'
         '400':
           description: bad input parameter
     post:
@@ -161,6 +142,30 @@ paths:
         '409':
           description: an existing item already exists
       requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1books~1%7BbookId%7D/get/200/content/application~1json/schema'
+        description: Inventory item to add
+    delete:
+      tags:
+        - admins
+      summary: removes a book item
+      description: Delete books
+      parameters:
+        - in: path
+          name: bookId
+          schema:
+            type: string
+          required: true
+          description: string id of book to delete
+      responses:
+        '200':
+          description: book that was deleted
+  '/books/{bookId}':
+    get:
+      '200':
+        description: a single author.
         content:
           application/json:
             schema:
@@ -212,22 +217,11 @@ paths:
                   type: string
                   format: date-time
                   example: '2016-08-29T09:12:33.001Z'
-        description: Inventory item to add
-    delete:
       tags:
-        - admins
-      summary: removes a book item
-      description: Delete books
-      parameters:
-        - in: path
-          name: bookId
-          schema:
-            type: string
-          required: true
-          description: string id of book to delete
-      responses:
-        '200':
-          description: book that was deleted
+        - users
+      summary: Get an author by ID
+      parameters: null
+      responses: null
   /users:
     get:
       tags:
@@ -277,7 +271,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/paths/~1admin/get/responses/200/content/application~1json/schema/items'
+                  $ref: '#/components/schemas/User%20Item'
         '400':
           description: bad input parameter
     post:
@@ -289,25 +283,42 @@ paths:
         BearerAuth: []
       parameters:
         - in: query
-          name: name
-          description: name of the user
-          required: true
+          name: searchString
+          description: pass an optional search string for looking up inventory
+          required: false
           schema:
             type: string
         - in: query
-          name: email
-          description: email of the user
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: password
-          description: password of the user
-          required: true
+          name: skip
+          description: number of records to skip for pagination
           schema:
             type: integer
             format: int32
             minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+        - in: query
+          name: getId
+          description: get the id of a user
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+        - in: query
+          name: get Id
+          description: get the id of a user
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
       responses:
         '201':
           description: item created
@@ -319,23 +330,35 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1admin/get/responses/200/content/application~1json/schema/items'
+              $ref: '#/components/schemas/User%20Item'
         description: Inventory item to add
     delete:
       tags:
         - admins
-      summary: removes a user
       description: Delete users
       parameters:
-        - in: path
+        - '200':
+            description: User that was deleted
+          in: path
           name: userId
           schema:
             type: string
           required: true
           description: string id of user to delete
-      responses:
-        '200':
-          description: User that was deleted
+          responses: null
+  '/users/{userId}':
+    get:
+      '200':
+        description: a single author.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User%20Item'
+      tags:
+        - admins
+      summary: Get an author by ID
+      parameters: null
+      responses: null
   /authors:
     get:
       tags:
@@ -377,7 +400,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/paths/~1authors/post/requestBody/content/application~1json/schema'
+                  $ref: '#/paths/~1authors~1%7BauthorId%7D/get/200/content/application~1json/schema'
         '400':
           description: bad input parameter
     post:
@@ -390,6 +413,30 @@ paths:
       responses:
         $ref: '#/paths/~1authors/get/responses'
       requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1authors~1%7BauthorId%7D/get/200/content/application~1json/schema'
+        description: Author item to add
+    delete:
+      tags:
+        - admins
+      summary: removes an author
+      description: Delete authors
+      parameters:
+        - in: path
+          name: authorId
+          schema:
+            type: string
+          required: true
+          description: string id of user to delete
+      responses:
+        '200':
+          description: User that was deleted
+  '/authors/{authorId}':
+    get:
+      '200':
+        description: a single author.
         content:
           application/json:
             schema:
@@ -413,22 +460,11 @@ paths:
                 email:
                   type: string
                   example: you@company.com
-        description: Author item to add
-    delete:
       tags:
-        - admins
-      summary: removes an author
-      description: Delete authors
-      parameters:
-        - in: path
-          name: authorId
-          schema:
-            type: string
-          required: true
-          description: string id of user to delete
-      responses:
-        '200':
-          description: User that was deleted
+        - users
+      summary: Get an author by ID
+      parameters: null
+      responses: null
 components:
   schemas:
     User Item:

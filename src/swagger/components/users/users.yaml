@@ -18,7 +18,7 @@ get:
           schema:
             type: array
             items:
-              $ref: "../schemas/userItem"
+              $ref: "../schemas/userItem.yaml"
     "400":
       description: bad input parameter
 post:

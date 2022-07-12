@@ -5,9 +5,9 @@ servers:
   - description: SwaggerHub API
     url: HTTPS
 info:
-  description: This is a simple API
+  description: Library API
   version: "1.0.0"
-  title: Simple Inventory API
+  title: Simple library API
   contact:
     email: you@your-company.com
   license:
@@ -25,11 +25,11 @@ paths:
     get:
       tags:
         - developers
-      summary: searches inventory
-      operationId: searchInventory
+      summary: get admin user
+      operationId: getAdminUser
       description: |
         By passing in the appropriate options, you can search for
-        available inventory in the system
+        available admins in system
       security:
         BearerAuth: []
       parameters:
@@ -87,10 +87,50 @@ paths:
         description: Inventory item to add
   /books:
     $ref: "./components/books/books.yaml"
+  /books/{bookId}:
+    get:
+      tags:
+        - users
+      summary: Get an book by ID
+      parameters:
+      responses:
+      "200":
+        description: a single book.
+        content:
+          application/json:
+            schema:
+              $ref: "./components/schemas/bookItem.yaml"
   /users:
     $ref: "./components/users/users.yaml"
+  /users/{userId}:
+    get:
+      tags:
+        - admins
+      summary: Get a user by ID
+      parameters:
+      responses:
+      "200":
+        description: a single user.
+        content:
+          application/json:
+            schema:
+              $ref: "./components/schemas/userItem.yaml"
+
   /authors:
     $ref: "./components/authors/authors.yaml"
+  /authors/{authorId}:
+    get:
+      tags:
+        - users
+      summary: Get an author by ID
+      parameters:
+      responses:
+      "200":
+        description: a single author.
+        content:
+          application/json:
+            schema:
+              $ref: "./components/schemas/authorItem.yaml"
 components:
   schemas:
     User Item:
