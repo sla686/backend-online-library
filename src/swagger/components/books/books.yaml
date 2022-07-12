@@ -1,0 +1,53 @@
+get:
+  tags:
+    - developers
+  summary: searches Books
+  operationId: searchBooks
+  description: |
+    By passing in the appropriate options, you can search for
+    available Books in the system
+  security:
+    BearerAuth: []
+  parameters:
+    $ref: "./getParameters.yaml"
+  responses:
+    "200":
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../schemas/bookItem.yaml"
+    "400":
+      description: bad input parameter
+post:
+  tags:
+    - admins
+  summary: adds a book item
+  description: Adds a book item to the system
+  security:
+    BearerAuth: []
+  responses:
+    $ref: "./postResponses.yaml"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/bookItem.yaml"
+    description: Inventory item to add
+delete:
+  tags:
+    - admins
+  summary: removes a book item
+  description: Delete books
+  parameters:
+    - in: path
+      name: bookId
+      schema:
+        type: string
+      required: true
+      description: string id of book to delete
+  responses:
+    "200":
+      description: book that was deleted

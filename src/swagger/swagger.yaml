@@ -1,0 +1,101 @@
+openapi: 3.0.1
+servers:
+  - description: SwaggerHub API
+    url: HTTP
+  - description: SwaggerHub API
+    url: HTTPS
+info:
+  description: This is a simple API
+  version: "1.0.0"
+  title: Simple Inventory API
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+  # - name: employers
+  #   description: Mananger of the employees
+paths:
+  /admin:
+    get:
+      tags:
+        - developers
+      summary: searches inventory
+      operationId: searchInventory
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      security:
+        BearerAuth: []
+      parameters:
+        - in: query
+          name: searchString
+          description: pass an optional search string for looking up inventory
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: skip
+          description: number of records to skip for pagination
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "./components/schemas/userItem.yaml"
+        "400":
+          description: bad input parameter
+    post:
+      tags:
+        - admins
+      summary: adds an inventory item
+      description: Adds an item to the system
+      security:
+        BearerAuth: []
+      responses:
+        "201":
+          description: item created
+        "400":
+          description: "invalid input, object invalid"
+        "409":
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "./components/schemas/UserItem.yaml"
+        description: Inventory item to add
+  /books:
+    $ref: "./components/books/books.yaml"
+  /users:
+    $ref: "./components/users/users.yaml"
+  /authors:
+    $ref: "./components/authors/authors.yaml"
+components:
+  schemas:
+    User Item:
+      $ref: "./components/schemas/UserItem.yaml"
+    Manufacturer:
+      $ref: "./components/schemas/Manufacturer.yaml"
+  securitySchemes:
+    $ref: "./components/schemas/securitySchemes.yaml"

@@ -1,0 +1,44 @@
+get:
+  tags:
+    - developers
+  summary: searches authors
+  operationId: searchAuthors
+  description: |
+    By passing in the appropriate options, you can search for
+    available authors in the system
+  security:
+    BearerAuth: []
+  parameters:
+    $ref: "./parameters.yaml"
+  responses:
+    $ref: "./postResponses.yaml"
+post:
+  tags:
+    - admins
+  summary: adds an author item
+  description: Adds an author item to the system
+  security:
+    BearerAuth: []
+  responses:
+    $ref: "./postResponses.yaml"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/authorItem.yaml"
+    description: Author item to add
+delete:
+  tags:
+    - admins
+  summary: removes an author
+  description: Delete authors
+  parameters:
+    - in: path
+      name: authorId
+      schema:
+        type: string
+      required: true
+      description: string id of user to delete
+  responses:
+    "200":
+      description: User that was deleted

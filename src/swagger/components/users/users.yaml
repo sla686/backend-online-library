@@ -1,0 +1,96 @@
+get:
+  tags:
+    - developers
+  summary: searches users
+  operationId: searchUsers
+  description: |
+    By passing in the appropriate options, you can search for
+    available users in the system
+  security:
+    BearerAuth: []
+  parameters:
+    $ref: "./getParameters.yaml"
+  responses:
+    "200":
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../schemas/userItem"
+    "400":
+      description: bad input parameter
+post:
+  tags:
+    - admins
+  summary: adds a user item
+  description: Adds a user to the system
+  security:
+    BearerAuth: []
+  parameters:
+    - in: query
+      name: searchString
+      description: pass an optional search string for looking up inventory
+      required: false
+      schema:
+        type: string
+    - in: query
+      name: skip
+      description: number of records to skip for pagination
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+    - in: query
+      name: limit
+      description: maximum number of records to return
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 50
+    - in: query
+      name: getId
+      description: get the id of a user
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 50
+    - in: query
+      name: get Id
+      description: get the id of a user
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 50
+  responses:
+    "201":
+      description: item created
+    "400":
+      description: "invalid input, object invalid"
+    "409":
+      description: an existing item already exists
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/userItem.yaml"
+    description: Inventory item to add
+delete:
+  tags:
+    - admins
+  description: Delete users
+  parameters:
+    - in: path
+    name: userId
+    schema:
+      type: string
+    required: true
+    description: string id of user to delete
+    responses:
+    200:
+     description: User that was deleted
+ 

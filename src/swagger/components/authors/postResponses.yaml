@@ -1,0 +1,10 @@
+"200":
+  description: search results matching criteria
+  content:
+    application/json:
+      schema:
+        type: array
+        items:
+          $ref: "../schemas/authorItem.yaml"
+"400":
+  description: bad input parameter

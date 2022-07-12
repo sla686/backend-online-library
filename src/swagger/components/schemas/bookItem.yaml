@@ -1,0 +1,48 @@
+type: object
+required:
+  - isbn
+  - title
+  - description
+  - publisher
+  - authors
+  - status
+  - borrower_id
+  - published_date
+  - borrow_date
+  - return_date
+properties:
+  isbn:
+    type: string
+    format: uuid
+    example: 978-1781250914
+  title:
+    type: string
+    example: Mastery
+  description:
+    type: string
+    example: A book on mastery
+  publisher:
+    type: string
+    format:
+    example: Integrify Publishing Ltd
+  authors:
+    type: string
+    example: Jim Ron
+  status:
+    type: string
+    example: borrowed
+  borrower_id:
+    type: string
+    example: d290f1ee-6c54-4b01-90e6-d701748f0851
+  published_date:
+    type: string
+    format: date-time
+    example: "2016-08-29T09:12:33.001Z"
+  borrow_date:
+    type: string
+    format: date-time
+    example: "2016-08-29T09:12:33.001Z"
+  return_date:
+    type: string
+    format: date-time
+    example: "2016-08-29T09:12:33.001Z"
