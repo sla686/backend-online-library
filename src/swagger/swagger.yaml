@@ -28,35 +28,12 @@ paths:
   /users:
     $ref: "./components/users/users.yaml"
   /users/{userId}:
-    get:
-      tags:
-        - admins
-      summary: Get a user by ID
-      parameters:
-      responses:
-      "200":
-        description: a single user.
-        content:
-          application/json:
-            schema:
-              $ref: "./components/schemas/userItem.yaml"
+    $ref: "./components/users/user/user.yaml"
 
   /authors:
     $ref: "./components/authors/authors.yaml"
   /authors/{authorId}:
-    get:
-      tags:
-        - users
-        - admins
-      summary: Get an author by ID
-      parameters:
-      responses:
-      "200":
-        description: a single author.
-        content:
-          application/json:
-            schema:
-              $ref: "./components/schemas/authorItem.yaml"
+    $ref: "./components/authors/author/author.yaml"
 components:
   schemas:
     book Item:

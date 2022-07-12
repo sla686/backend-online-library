@@ -268,17 +268,80 @@ paths:
         description: book list information to update
   '/users/{userId}':
     get:
-      '200':
-        description: a single user.
+      tags:
+        - users
+        - admin
+      summary: Get an author by ID
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User%20Item'
+        '400':
+          description: bad input parameter
+    patch:
+      tags:
+        - admins
+      summary: updates user
+      security:
+        BearerAuth: []
+      responses:
+        $ref: '#/paths/~1books/post/responses'
+      requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/User%20Item'
+        description: user information to update
+    post:
       tags:
         - admins
-      summary: Get a user by ID
-      parameters: null
-      responses: null
+      summary: adds a user item
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      description: Adds a user item to the system
+      security:
+        BearerAuth: []
+      responses:
+        $ref: '#/paths/~1books/post/responses'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User%20Item'
+        description: user to add
+    delete:
+      tags:
+        - admins
+      description: Delete user
+      parameters:
+        - in: path
+          name: authorId
+          schema:
+            type: string
+          required: true
+          description: string id of user to delete
+      responses:
+        '200':
+          description: User that was deleted
   /authors:
     get:
       tags:
@@ -370,18 +433,89 @@ paths:
           description: User that was deleted
   '/authors/{authorId}':
     get:
-      '200':
-        description: a single author.
+      tags:
+        - users
+        - admin
+      summary: Get an author by ID
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/author%20Item'
+        '400':
+          description: bad input parameter
+    patch:
+      tags:
+        - admins
+      summary: updates an author
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      security:
+        BearerAuth: []
+      responses:
+        $ref: '#/paths/~1authors/get/responses'
+      requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/author%20Item'
+    post:
       tags:
-        - users
         - admins
-      summary: Get an author by ID
-      parameters: null
-      responses: null
+      summary: adds an author item
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      description: Adds an author item to the system
+      security:
+        BearerAuth: []
+      responses:
+        $ref: '#/paths/~1authors/get/responses'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/author%20Item'
+        description: Author item to add
+    delete:
+      tags:
+        - admins
+      summary: removes an author
+      description: Delete authors
+      parameters:
+        - in: path
+          name: authorId
+          schema:
+            type: string
+          required: true
+          description: string id of user to delete
+      responses:
+        '200':
+          description: User that was deleted
 components:
   schemas:
     book Item:

@@ -33,16 +33,16 @@ patch:
       schema:
         type: integer
         format: int64
-        minimum: 1  
+        minimum: 1
   security:
     BearerAuth: []
   responses:
-    $ref: "./postResponses.yaml"
+    $ref: "../postResponses.yaml"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../schemas/authorItem.yaml"
+          $ref: "../../schemas/authorItem.yaml"
 post:
   tags:
     - admins
@@ -60,14 +60,14 @@ post:
   security:
     BearerAuth: []
   responses:
-    $ref: "./postResponses.yaml"
+    $ref: "../postResponses.yaml"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../schemas/authorItem.yaml"
+          $ref: "../../schemas/authorItem.yaml"
     description: Author item to add
-    delete:
+delete:
   tags:
     - admins
   summary: removes an author
