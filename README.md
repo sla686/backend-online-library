@@ -6,7 +6,7 @@ Main path:
 - Admin (or Admins if you decide to have multiple site admins)
 - Books
 - Authors
-- Cards
+- Carts
 - Optional paths: Reviews
 2. Ecommerce Website
 Main paths:
@@ -14,7 +14,7 @@ Main paths:
 - Admin (or Admins if you decide to have multiple site admins)
 - Products
 - Categories
-- Cards
+- Carts
 - Optional paths: Reviews
 ---
 ## Requirements
