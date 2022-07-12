@@ -83,7 +83,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "./components/schemas/UserItem.yaml"
+              $ref: "./components/schemas/userItem.yaml"
         description: Inventory item to add
   /books:
     $ref: "./components/books/books.yaml"
@@ -94,7 +94,7 @@ paths:
 components:
   schemas:
     User Item:
-      $ref: "./components/schemas/UserItem.yaml"
+      $ref: "./components/schemas/userItem.yaml"
     Manufacturer:
       $ref: "./components/schemas/Manufacturer.yaml"
   securitySchemes:
