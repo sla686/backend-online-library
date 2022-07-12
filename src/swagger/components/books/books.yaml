@@ -1,24 +1,22 @@
 get:
   tags:
     - admins
-  summary: searches Books
+    - users
+  summary: list of Books
   operationId: searchBooks
   description: |
     By passing in the appropriate options, you can search for
     available Books in the system
   security:
     BearerAuth: []
-  parameters:
-    $ref: "./getParameters.yaml"
   responses:
     "200":
       description: search results matching criteria
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: "../schemas/bookItem.yaml"
+          type: array
+          $ref: "../schemas/bookItem.yaml"
     "400":
       description: bad input parameter
 post:

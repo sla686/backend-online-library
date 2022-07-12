@@ -4,6 +4,7 @@ required:
   - firstname
   - lastname
   - email
+  - role
 properties:
   id:
     type: string
@@ -18,3 +19,6 @@ properties:
   email:
     type: string
     example: you@company.com
+  role:
+    type: string
+    example: admin

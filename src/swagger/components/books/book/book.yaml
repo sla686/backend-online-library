@@ -1,0 +1,22 @@
+get:
+  tags:
+    - users
+  summary: Get an book by ID
+  parameters:
+    - name: bookId
+      in: path
+      required: true
+      description: Parameter description in CommonMark or HTML.
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+  responses:
+    200:
+      description: OK.
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/bookItem.yaml"
+    400:
+      description: bad input parameter

@@ -16,115 +16,29 @@ info:
 tags:
   - name: admins
     description: Secured Admin-only calls
-  - name: developers
-    description: Operations available to regular developers
+  - name: users
+    description: Operations available to regular users
 paths:
-  /admin:
-    get:
-      tags:
-        - admins
-      summary: get admin user
-      operationId: getAdminUser
-      description: |
-        By passing in the appropriate options, you can search for
-        available admins in system
-      security:
-        BearerAuth: []
-      parameters:
-        - in: query
-          name: searchString
-          description: pass an optional search string for looking up inventory
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: skip
-          description: number of records to skip for pagination
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: maximum number of records to return
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
-      responses:
-        '200':
-          description: search results matching criteria
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User%20Item'
-        '400':
-          description: bad input parameter
-    post:
-      tags:
-        - admins
-      summary: adds an inventory item
-      description: Adds an item to the system
-      security:
-        BearerAuth: []
-      responses:
-        '201':
-          description: item created
-        '400':
-          description: 'invalid input, object invalid'
-        '409':
-          description: an existing item already exists
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User%20Item'
-        description: Inventory item to add
   /books:
     get:
       tags:
         - admins
-      summary: searches Books
+        - users
+      summary: list of Books
       operationId: searchBooks
       description: |
         By passing in the appropriate options, you can search for
         available Books in the system
       security:
         BearerAuth: []
-      parameters:
-        - in: query
-          name: searchString
-          description: pass an optional search string for looking up inventory
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: skip
-          description: number of records to skip for pagination
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: maximum number of records to return
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
       responses:
         '200':
           description: search results matching criteria
           content:
             application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/paths/~1books~1%7BbookId%7D/get/200/content/application~1json/schema'
+              schema: null
+              type: array
+              $ref: '#/components/schemas/book%20Item'
         '400':
           description: bad input parameter
     post:
@@ -145,7 +59,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1books~1%7BbookId%7D/get/200/content/application~1json/schema'
+              $ref: '#/components/schemas/book%20Item'
         description: Inventory item to add
     delete:
       tags:
@@ -164,67 +78,27 @@ paths:
           description: book that was deleted
   '/books/{bookId}':
     get:
-      '200':
-        description: a single book.
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - isbn
-                - title
-                - description
-                - publisher
-                - authors
-                - status
-                - borrower_id
-                - published_date
-                - borrow_date
-                - return_date
-              properties:
-                id:
-                  type: string
-                  description: auto generated id of the book
-                isbn:
-                  type: string
-                  format: uuid
-                  example: 978-1781250914
-                title:
-                  type: string
-                  example: Mastery
-                description:
-                  type: string
-                  example: A book on mastery
-                publisher:
-                  type: string
-                  format: null
-                  example: Integrify Publishing Ltd
-                authors:
-                  type: string
-                  example: Jim Ron
-                status:
-                  type: string
-                  example: borrowed
-                borrower_id:
-                  type: string
-                  example: d290f1ee-6c54-4b01-90e6-d701748f0851
-                published_date:
-                  type: string
-                  format: date-time
-                  example: '2016-08-29T09:12:33.001Z'
-                borrow_date:
-                  type: string
-                  format: date-time
-                  example: '2016-08-29T09:12:33.001Z'
-                return_date:
-                  type: string
-                  format: date-time
-                  example: '2016-08-29T09:12:33.001Z'
       tags:
         - users
       summary: Get an book by ID
-      parameters: null
-      responses: null
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/book%20Item'
+        '400':
+          description: bad input parameter
   /users:
     get:
       tags:
@@ -366,6 +240,7 @@ paths:
     get:
       tags:
         - admins
+        - users
       summary: searches authors
       operationId: searchAuthors
       description: |
@@ -403,7 +278,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/paths/~1authors~1%7BauthorId%7D/get/200/content/application~1json/schema'
+                  $ref: '#/components/schemas/author%20Item'
         '400':
           description: bad input parameter
     post:
@@ -419,7 +294,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1authors~1%7BauthorId%7D/get/200/content/application~1json/schema'
+              $ref: '#/components/schemas/author%20Item'
         description: Author item to add
     delete:
       tags:
@@ -443,34 +318,94 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - id
-                - firstname
-                - lastname
-                - email
-              properties:
-                id:
-                  type: string
-                  format: uuid
-                  example: d290f1ee-6c54-4b01-90e6-d701748f0851
-                firstname:
-                  type: string
-                  example: Johnny
-                lastname:
-                  type: string
-                  example: nylund
-                email:
-                  type: string
-                  example: you@company.com
+              $ref: '#/components/schemas/author%20Item'
       tags:
         - users
+        - admins
       summary: Get an author by ID
       parameters: null
       responses: null
 components:
   schemas:
+    book Item:
+      type: object
+      required:
+        - isbn
+        - title
+        - description
+        - publisher
+        - authors
+        - status
+        - borrower_id
+        - published_date
+        - borrow_date
+        - return_date
+      properties:
+        id:
+          type: string
+          description: auto generated id of the book
+          example: 1
+        isbn:
+          type: string
+          format: uuid
+          example: 978-1781250914
+        title:
+          type: string
+          example: Mastery
+        description:
+          type: string
+          example: A book on mastery
+        publisher:
+          type: string
+          format: null
+          example: Integrify Publishing Ltd
+        authors:
+          type: string
+          example: Jim Ron
+        status:
+          type: string
+          example: borrowed
+        borrower_id:
+          type: string
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        published_date:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        borrow_date:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        return_date:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
     User Item:
+      type: object
+      required:
+        - id
+        - firstname
+        - lastname
+        - email
+        - role
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        firstname:
+          type: string
+          example: Johnny
+        lastname:
+          type: string
+          example: nylund
+        email:
+          type: string
+          example: you@company.com
+        role:
+          type: string
+          example: admin
+    author Item:
       type: object
       required:
         - id
@@ -506,24 +441,24 @@ components:
           type: string
           example: 408-867-5309
       type: object
-  securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
-    BearerAuth:
-      type: http
-      scheme: bearer
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-API-Key
-    OAuth2:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: 'https://example.com/oauth/authorize'
-          tokenUrl: 'https://example.com/oauth/token'
-          scopes:
-            read: Grants read access
-            write: Grants write access
-            admin: Grants access to admin operations
+    securitySchemes:
+      BasicAuth:
+        type: http
+        scheme: basic
+      BearerAuth:
+        type: http
+        scheme: bearer
+      ApiKeyAuth:
+        type: apiKey
+        in: header
+        name: X-API-Key
+      OAuth2:
+        type: oauth2
+        flows:
+          authorizationCode:
+            authorizationUrl: 'https://example.com/oauth/authorize'
+            tokenUrl: 'https://example.com/oauth/token'
+            scopes:
+              read: Grants read access
+              write: Grants write access
+              admin: Grants access to admin operations

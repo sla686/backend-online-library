@@ -14,6 +14,7 @@ properties:
   id:
     type: string
     description: auto generated id of the book
+    example: 1
   isbn:
     type: string
     format: uuid

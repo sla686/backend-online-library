@@ -16,90 +16,15 @@ info:
 tags:
   - name: admins
     description: Secured Admin-only calls
-  - name: developers
-    description: Operations available to regular developers
+  - name: users
+    description: Operations available to regular users
   # - name: employers
   #   description: Mananger of the employees
 paths:
-  /admin:
-    get:
-      tags:
-        - admins
-      summary: get admin user
-      operationId: getAdminUser
-      description: |
-        By passing in the appropriate options, you can search for
-        available admins in system
-      security:
-        BearerAuth: []
-      parameters:
-        - in: query
-          name: searchString
-          description: pass an optional search string for looking up inventory
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: skip
-          description: number of records to skip for pagination
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: maximum number of records to return
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
-      responses:
-        "200":
-          description: search results matching criteria
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "./components/schemas/userItem.yaml"
-        "400":
-          description: bad input parameter
-    post:
-      tags:
-        - admins
-      summary: adds an inventory item
-      description: Adds an item to the system
-      security:
-        BearerAuth: []
-      responses:
-        "201":
-          description: item created
-        "400":
-          description: "invalid input, object invalid"
-        "409":
-          description: an existing item already exists
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "./components/schemas/userItem.yaml"
-        description: Inventory item to add
   /books:
     $ref: "./components/books/books.yaml"
   /books/{bookId}:
-    get:
-      tags:
-        - users
-      summary: Get an book by ID
-      parameters:
-      responses:
-      "200":
-        description: a single book.
-        content:
-          application/json:
-            schema:
-              $ref: "./components/schemas/bookItem.yaml"
+    $ref: "./components/books/book/book.yaml"
   /users:
     $ref: "./components/users/users.yaml"
   /users/{userId}:
@@ -122,6 +47,7 @@ paths:
     get:
       tags:
         - users
+        - admins
       summary: Get an author by ID
       parameters:
       responses:
@@ -133,9 +59,14 @@ paths:
               $ref: "./components/schemas/authorItem.yaml"
 components:
   schemas:
+    book Item:
+      $ref: "./components/schemas/bookItem.yaml"
     User Item:
       $ref: "./components/schemas/userItem.yaml"
+    author Item:
+      $ref: "./components/schemas/authorItem.yaml"
+
     Manufacturer:
       $ref: "./components/schemas/Manufacturer.yaml"
-  securitySchemes:
-    $ref: "./components/schemas/securitySchemes.yaml"
+    securitySchemes:
+      $ref: "./components/schemas/securitySchemes.yaml"

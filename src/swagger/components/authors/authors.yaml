@@ -1,6 +1,7 @@
 get:
   tags:
     - admins
+    - users
   summary: searches authors
   operationId: searchAuthors
   description: |
