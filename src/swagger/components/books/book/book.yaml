@@ -1,7 +1,7 @@
 get:
   tags:
     - users
-    - admin
+    - admins
   summary: Get an book by ID
   parameters:
     - name: bookId
@@ -24,7 +24,7 @@ get:
 patch:
   tags:
     - admins
-  summary: updates a book
+  summary: Updates a book
   security:
     BearerAuth: []
   responses:

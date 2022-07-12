@@ -1,8 +1,8 @@
 get:
   tags:
     - users
-    - admin
-  summary: Get an author by ID
+    - admins
+  summary: Get a user by ID
   parameters:
     - name: authorId
       in: path
@@ -24,7 +24,7 @@ get:
 patch:
   tags:
     - admins
-  summary: updates user
+  summary: Updates a user
   security:
     BearerAuth: []
   responses:
@@ -38,7 +38,7 @@ patch:
 post:
   tags:
     - admins
-  summary: adds a user item
+  summary: Adds a user
   parameters:
     - name: userId
       in: path
@@ -62,7 +62,8 @@ post:
 delete:
   tags:
     - admins
-  description: Delete user
+  summary: Deletes a user
+  description: Deletes a user
   parameters:
     - in: path
       name: authorId

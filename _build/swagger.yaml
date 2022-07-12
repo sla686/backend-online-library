@@ -94,7 +94,7 @@ paths:
     get:
       tags:
         - users
-        - admin
+        - admins
       summary: Get an book by ID
       parameters:
         - name: bookId
@@ -117,7 +117,7 @@ paths:
     patch:
       tags:
         - admins
-      summary: updates a book
+      summary: Updates a book
       security:
         BearerAuth: []
       responses:
@@ -132,7 +132,7 @@ paths:
     get:
       tags:
         - admins
-      summary: searches users
+      summary: Searches users
       operationId: searchUsers
       description: |
         By passing in the appropriate options, you can search for
@@ -183,7 +183,7 @@ paths:
     post:
       tags:
         - admins
-      summary: adds a user item
+      summary: Adds a user
       description: Adds a user to the system
       security:
         BearerAuth: []
@@ -241,7 +241,8 @@ paths:
     delete:
       tags:
         - admins
-      description: Delete users
+      summary: Deletes a user
+      description: Deletes a user
       parameters:
         - '200':
             description: User that was deleted
@@ -255,7 +256,7 @@ paths:
     patch:
       tags:
         - admins
-      summary: updates users
+      summary: Updates a user
       security:
         BearerAuth: []
       responses:
@@ -270,8 +271,8 @@ paths:
     get:
       tags:
         - users
-        - admin
-      summary: Get an author by ID
+        - admins
+      summary: Get a user by ID
       parameters:
         - name: authorId
           in: path
@@ -293,7 +294,7 @@ paths:
     patch:
       tags:
         - admins
-      summary: updates user
+      summary: Updates a user
       security:
         BearerAuth: []
       responses:
@@ -307,7 +308,7 @@ paths:
     post:
       tags:
         - admins
-      summary: adds a user item
+      summary: Adds a user
       parameters:
         - name: userId
           in: path
@@ -331,7 +332,8 @@ paths:
     delete:
       tags:
         - admins
-      description: Delete user
+      summary: Deletes a user
+      description: Deletes a user
       parameters:
         - in: path
           name: authorId
@@ -435,7 +437,7 @@ paths:
     get:
       tags:
         - users
-        - admin
+        - admins
       summary: Get an author by ID
       parameters:
         - name: authorId
@@ -458,7 +460,7 @@ paths:
     patch:
       tags:
         - admins
-      summary: updates an author
+      summary: Updates an author
       parameters:
         - name: authorId
           in: path
@@ -480,7 +482,7 @@ paths:
     post:
       tags:
         - admins
-      summary: adds an author item
+      summary: Adds an author
       parameters:
         - name: authorId
           in: path
@@ -504,7 +506,7 @@ paths:
     delete:
       tags:
         - admins
-      summary: removes an author
+      summary: Removes an author
       description: Delete authors
       parameters:
         - in: path

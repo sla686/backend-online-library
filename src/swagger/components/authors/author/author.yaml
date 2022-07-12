@@ -1,7 +1,7 @@
 get:
   tags:
     - users
-    - admin
+    - admins
   summary: Get an author by ID
   parameters:
     - name: authorId
@@ -24,7 +24,7 @@ get:
 patch:
   tags:
     - admins
-  summary: updates an author
+  summary: Updates an author
   parameters:
     - name: authorId
       in: path
@@ -46,7 +46,7 @@ patch:
 post:
   tags:
     - admins
-  summary: adds an author item
+  summary: Adds an author
   parameters:
     - name: authorId
       in: path
@@ -70,7 +70,7 @@ post:
 delete:
   tags:
     - admins
-  summary: removes an author
+  summary: Removes an author
   description: Delete authors
   parameters:
     - in: path
