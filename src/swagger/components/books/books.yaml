@@ -34,6 +34,20 @@ post:
         schema:
           $ref: "../schemas/bookItem.yaml"
     description: Inventory item to add
+patch:
+  tags:
+    - admins
+  summary: updates books
+  security:
+    BearerAuth: []
+  responses:
+    $ref: "./postResponses.yaml"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/bookItem.yaml"
+    description: book list information to update
 delete:
   tags:
     - admins

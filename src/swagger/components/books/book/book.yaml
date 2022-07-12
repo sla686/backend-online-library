@@ -1,6 +1,7 @@
 get:
   tags:
     - users
+    - admin
   summary: Get an book by ID
   parameters:
     - name: bookId
@@ -20,3 +21,17 @@ get:
             $ref: "../../schemas/bookItem.yaml"
     400:
       description: bad input parameter
+patch:
+  tags:
+    - admins
+  summary: updates a book
+  security:
+    BearerAuth: []
+  responses:
+    $ref: "../postResponses.yaml"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/bookItem.yaml"
+    description: Inventory item information to update

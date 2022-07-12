@@ -61,6 +61,20 @@ paths:
             schema:
               $ref: '#/components/schemas/book%20Item'
         description: Inventory item to add
+    patch:
+      tags:
+        - admins
+      summary: updates books
+      security:
+        BearerAuth: []
+      responses:
+        $ref: '#/paths/~1books/post/responses'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/book%20Item'
+        description: book list information to update
     delete:
       tags:
         - admins
@@ -80,6 +94,7 @@ paths:
     get:
       tags:
         - users
+        - admin
       summary: Get an book by ID
       parameters:
         - name: bookId
@@ -99,6 +114,20 @@ paths:
                 $ref: '#/components/schemas/book%20Item'
         '400':
           description: bad input parameter
+    patch:
+      tags:
+        - admins
+      summary: updates a book
+      security:
+        BearerAuth: []
+      responses:
+        $ref: '#/paths/~1books/post/responses'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/book%20Item'
+        description: Inventory item information to update
   /users:
     get:
       tags:
@@ -223,6 +252,20 @@ paths:
           required: true
           description: string id of user to delete
           responses: null
+    patch:
+      tags:
+        - admins
+      summary: updates users
+      security:
+        BearerAuth: []
+      responses:
+        $ref: '#/paths/~1books/post/responses'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User%20Item'
+        description: book list information to update
   '/users/{userId}':
     get:
       '200':
@@ -296,6 +339,20 @@ paths:
             schema:
               $ref: '#/components/schemas/author%20Item'
         description: Author item to add
+    patch:
+      tags:
+        - admins
+      summary: updates authors list
+      security:
+        BearerAuth: []
+      responses:
+        $ref: '#/paths/~1authors/get/responses'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/book%20Item'
+        description: authors list update
     delete:
       tags:
         - admins

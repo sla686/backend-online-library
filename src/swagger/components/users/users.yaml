@@ -93,3 +93,17 @@ delete:
       responses:
       200:
         description: User that was deleted
+patch:
+  tags:
+    - admins
+  summary: updates users
+  security:
+    BearerAuth: []
+  responses:
+    $ref: "../books/postResponses.yaml"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/userItem.yaml"
+    description: book list information to update

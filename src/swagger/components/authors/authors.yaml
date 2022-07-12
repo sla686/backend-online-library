@@ -28,6 +28,20 @@ post:
         schema:
           $ref: "../schemas/authorItem.yaml"
     description: Author item to add
+patch:
+  tags:
+    - admins
+  summary: updates authors list
+  security:
+    BearerAuth: []
+  responses:
+    $ref: "./postResponses.yaml"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/bookItem.yaml"
+    description: authors list update
 delete:
   tags:
     - admins
