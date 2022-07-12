@@ -30,9 +30,28 @@ if (process.env.NODE_ENV === "production") {
   app.use(helmet());
 }
 
-// Add swagger router
+// Experimenting with GET routes - they all work!
+// Remember that order matters!
+// That is why the main "/" route is below all other routes!
+app.get("/admin", (req, res) => {
+  res.send("Welcome to GET /admin");
+});
+
+app.get("/books", (req, res) => {
+  res.send("Welcome to GET /books");
+});
+
+app.get("/authors", (req, res) => {
+  res.send("Welcome to GET /authors");
+});
+
+app.get("/cart", (req, res) => {
+  res.send("Welcome to GET /cart");
+});
+
+// Adding swagger router (according to the task #1 in the README file)
 app.use(
-  "/api-docs",
+  "/",
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, {
     explorer: true,
@@ -48,9 +67,9 @@ app.set("views", viewsDir);
 app.use(express.static(staticDir)); */
 
 // Serve index.html file
-app.get("/", (_: Request, res: Response) => {
-  res.sendFile("index.html", { root: viewsDir });
-});
+// app.get("/", (_: Request, res: Response) => {
+//   res.sendFile("index.html", { root: viewsDir });
+// });
 
 // Export here and start in a diff file (for testing).
 export default app;

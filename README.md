@@ -19,8 +19,8 @@ Main paths:
 ---
 ## Requirements
 *For team assignment, only 1 member in the team should fork the repo. Then, admin can invite other members to contribute in the same repo. Remember to have develop branch before merging to main. And each feature/schema/bug/issue should have it's own branch, and taken by only 1 member. Before making any new branch, make sure you run `git pull` to avoid the conflicts with the remote repo. If neccessary, check the Git lecture again.*
-1. Design the API endpoints, following REST API architecture (if you team has done this part in the rest-api assignment, you can copy the swagger folder here, as well as the codes). Change the  api document path to '/', so it will be the first page when users visit.
-2. Set up exress server and create CRUD endpoints for all the schema:
+1. Design the API endpoints, following REST API architecture (if your team has done this part in the rest-api assignment, you can copy the swagger folder here, as well as the code). Change the api document path to '/', so it will be the first page when users visit.
+2. Set up express server and create CRUD endpoints for all the schema:
 - Create routers for the main paths, and use the router in the app.
 - Add error handler middlewares (authentication middlewares can be delayed till we reach that lecture).
 3. Create controller folder and the controller file for each route. Add request handlers of each route to it's controller file.
