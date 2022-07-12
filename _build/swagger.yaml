@@ -165,7 +165,7 @@ paths:
   '/books/{bookId}':
     get:
       '200':
-        description: a single author.
+        description: a single book.
         content:
           application/json:
             schema:
@@ -219,7 +219,7 @@ paths:
                   example: '2016-08-29T09:12:33.001Z'
       tags:
         - users
-      summary: Get an author by ID
+      summary: Get an book by ID
       parameters: null
       responses: null
   /users:
@@ -349,14 +349,14 @@ paths:
   '/users/{userId}':
     get:
       '200':
-        description: a single author.
+        description: a single user.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/User%20Item'
       tags:
         - admins
-      summary: Get an author by ID
+      summary: Get a user by ID
       parameters: null
       responses: null
   /authors:
