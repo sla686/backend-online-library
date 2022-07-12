@@ -85,12 +85,11 @@ delete:
   description: Delete users
   parameters:
     - in: path
-    name: userId
-    schema:
-      type: string
-    required: true
-    description: string id of user to delete
-    responses:
-    200:
-     description: User that was deleted
- 
+      name: userId
+      schema:
+        type: string
+      required: true
+      description: string id of user to delete
+      responses:
+      200:
+        description: User that was deleted
