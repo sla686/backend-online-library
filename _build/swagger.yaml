@@ -22,7 +22,7 @@ paths:
   /admin:
     get:
       tags:
-        - developers
+        - admins
       summary: get admin user
       operationId: getAdminUser
       description: |
@@ -86,7 +86,7 @@ paths:
   /books:
     get:
       tags:
-        - developers
+        - admins
       summary: searches Books
       operationId: searchBooks
       description: |
@@ -182,6 +182,9 @@ paths:
                 - borrow_date
                 - return_date
               properties:
+                id:
+                  type: string
+                  description: auto generated id of the book
                 isbn:
                   type: string
                   format: uuid
@@ -225,7 +228,7 @@ paths:
   /users:
     get:
       tags:
-        - developers
+        - admins
       summary: searches users
       operationId: searchUsers
       description: |
@@ -362,7 +365,7 @@ paths:
   /authors:
     get:
       tags:
-        - developers
+        - admins
       summary: searches authors
       operationId: searchAuthors
       description: |

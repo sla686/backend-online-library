@@ -24,7 +24,7 @@ paths:
   /admin:
     get:
       tags:
-        - developers
+        - admins
       summary: get admin user
       operationId: getAdminUser
       description: |

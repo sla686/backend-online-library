@@ -11,6 +11,9 @@ required:
   - borrow_date
   - return_date
 properties:
+  id:
+    type: string
+    description: auto generated id of the book
   isbn:
     type: string
     format: uuid

@@ -1,6 +1,6 @@
 get:
   tags:
-    - developers
+    - admins
   summary: searches users
   operationId: searchUsers
   description: |
