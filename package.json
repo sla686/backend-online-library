@@ -5,6 +5,7 @@
   "scripts": {
     "build": "./node_modules/.bin/ts-node build.ts",
     "lint": "eslint . --ext .ts",
+    "swagger": "swagger-cli bundle ./src/swagger/swagger.yaml --outfile ./src/swagger/build/swagger.yaml --type yaml",
     "start": "node -r module-alias/register ./dist --env=production",
     "start:dev": "nodemon",
     "test": "nodemon --config ./spec/nodemon.json",
