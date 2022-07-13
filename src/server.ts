@@ -6,6 +6,7 @@ import "express-async-errors";
 import swaggerUi, { JsonObject } from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
+import userRoute from "./routes/userRoute";
 
 //import swaggerDocument from './swagger/swagger.json'
 const swaggerDocument: JsonObject | undefined = YAML.load(
@@ -33,6 +34,7 @@ if (process.env.NODE_ENV === "production") {
 // Experimenting with GET routes - they all work!
 // Remember that order matters!
 // That is why the main "/" route is below all other routes!
+app.use('/',userRoute)
 app.get("/admin", (req, res) => {
   res.send("Welcome to GET /admin");
 });
