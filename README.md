@@ -1,7 +1,3 @@
-### Swagger-cli information
-To launch the Swagger-cli application:
-swagger-cli bundle ./src/swagger/swagger.yaml --outfile ./src/swagger/build/swagger.yaml --type yaml
-
 ### Backend project
 This assigment requires teamwork. Your team has been assigned one of two topics: 
 1. Library management system
