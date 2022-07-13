@@ -1,76 +1,88 @@
 get:
   tags:
-    - users
     - admins
-  summary: Get a user by ID
-  parameters:
-    - name: authorId
-      in: path
-      required: true
-      description: Parameter description in CommonMark or HTML.
-      schema:
-        type: integer
-        format: int64
-        minimum: 1
-  responses:
-    200:
-      description: OK.
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas/userItem.yaml"
-    400:
-      description: bad input parameter
-patch:
-  tags:
-    - admins
-  summary: Updates a user
-  security:
-    BearerAuth: []
-  responses:
-    $ref: "../../books/postResponses.yaml"
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: "../../schemas/userItem.yaml"
-    description: user information to update
-post:
-  tags:
-    - admins
-  summary: Adds a user
+  summary: Get a single user
+  description: You can get a single user by adding the id as a parameter
   parameters:
     - name: userId
       in: path
       required: true
-      description: Parameter description in CommonMark or HTML.
+      description: id of the user
       schema:
         type: integer
         format: int64
         minimum: 1
-  description: Adds a user item to the system
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/userItem.yaml"
+    "400":
+      description: Bad id parameter
+    "404":
+      description: User not found
+patch:
+  tags:
+    - admins
+  summary: Updates a user
+  description: You can update an existing user by sending an object and providing the id of the user you want to update
   security:
     BearerAuth: []
   responses:
-    $ref: "../../books/postResponses.yaml"
+    "200":
+      description: OK
+    "400":
+      description: Invalid input or object
+    "404":
+      description: User not found
   requestBody:
     content:
       application/json:
         schema:
           $ref: "../../schemas/userItem.yaml"
-    description: user to add
+    description: User object to update
+# post:
+#   tags:
+#     - admins
+#   summary: Adds a user
+#   parameters:
+#     - name: userId
+#       in: path
+#       required: true
+#       description: Parameter description in CommonMark or HTML.
+#       schema:
+#         type: integer
+#         format: int64
+#         minimum: 1
+#   description: Adds a user item to the system
+#   security:
+#     BearerAuth: []
+#   responses:
+#     $ref: "../../books/postResponses.yaml"
+#   requestBody:
+#     content:
+#       application/json:
+#         schema:
+#           $ref: "../../schemas/userItem.yaml"
+#     description: user to add
 delete:
   tags:
     - admins
-  summary: Deletes a user
-  description: Deletes a user
+  summary: Removes a user
+  description: Removes a user by adding the id as the parameter
   parameters:
     - in: path
-      name: authorId
+      name: userId
       schema:
-        type: string
+        type: integer
+        format: int64
+        minimum: 1
       required: true
-      description: string id of user to delete
+      description: id of user to delete
   responses:
-    "200":
-      description: User that was deleted
+    "204":
+      description: No context - successfully deleted
+    "404":
+      description: User not found

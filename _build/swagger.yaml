@@ -24,119 +24,110 @@ paths:
       tags:
         - admins
         - users
-      summary: list of Books
-      operationId: searchBooks
-      description: |
-        By passing in the appropriate options, you can search for
-        available Books in the system
+      summary: Get all books
+      description: You can access the list of all books by using this endpoint
       security:
         BearerAuth: []
       responses:
         '200':
-          description: search results matching criteria
+          description: OK
           content:
             application/json:
               schema: null
               type: array
-              $ref: '#/components/schemas/book%20Item'
-        '400':
-          description: bad input parameter
+              $ref: '#/components/schemas/Book%20schema'
     post:
       tags:
         - admins
-      summary: adds a book item
-      description: Adds a book item to the system
+      summary: Adds a book
+      description: You can create a new book by using this endpoint
       security:
         BearerAuth: []
       responses:
         '201':
-          description: item created
+          description: Created
         '400':
-          description: 'invalid input, object invalid'
+          description: Invalid input or object
         '409':
-          description: an existing item already exists
+          description: The specified book's object already exists
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/book%20Item'
-        description: Inventory item to add
-    patch:
-      tags:
-        - admins
-      summary: updates books
-      security:
-        BearerAuth: []
-      responses:
-        $ref: '#/paths/~1books/post/responses'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/book%20Item'
-        description: book list information to update
-    delete:
-      tags:
-        - admins
-      summary: removes a book item
-      description: Delete books
-      parameters:
-        - in: path
-          name: bookId
-          schema:
-            type: string
-          required: true
-          description: string id of book to delete
-      responses:
-        '200':
-          description: book that was deleted
+              $ref: '#/components/schemas/Book%20schema'
+        description: Book object to add
   '/books/{bookId}':
     get:
       tags:
         - users
         - admins
-      summary: Get an book by ID
+      summary: Get a single book
+      description: You can get a single book by adding the id as a parameter
       parameters:
         - name: bookId
           in: path
           required: true
-          description: Parameter description in CommonMark or HTML.
+          description: id of the book
           schema:
             type: integer
             format: int64
             minimum: 1
       responses:
         '200':
-          description: OK.
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/book%20Item'
+                $ref: '#/components/schemas/Book%20schema'
         '400':
-          description: bad input parameter
+          description: Bad id parameter
+        '404':
+          description: Book not found
     patch:
       tags:
         - admins
       summary: Updates a book
+      description: You can update an existing book by sending an object and providing the id of the book you want to update
       security:
         BearerAuth: []
       responses:
-        $ref: '#/paths/~1books/post/responses'
+        '200':
+          description: OK
+        '400':
+          description: Invalid input or object
+        '404':
+          description: Book not found
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/book%20Item'
-        description: Inventory item information to update
+              $ref: '#/components/schemas/Book%20schema'
+        description: Book object to update
+    delete:
+      tags:
+        - admins
+      summary: Removes a book
+      description: Removes a book by adding the id as the parameter
+      parameters:
+        - in: path
+          name: bookId
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+          required: true
+          description: id of book to delete
+      responses:
+        '204':
+          description: No context - successfully deleted
+        '404':
+          description: Book not found
   /users:
     get:
       tags:
         - admins
-      summary: Searches users
-      operationId: searchUsers
-      description: |
-        By passing in the appropriate options, you can search for
-        available users in the system
+      summary: Get all users
+      description: You can access the list of all users by using this endpoint
       security:
         BearerAuth: []
       parameters:
@@ -171,356 +162,228 @@ paths:
             maximum: 50
       responses:
         '200':
-          description: search results matching criteria
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User%20Item'
-        '400':
-          description: bad input parameter
+                  $ref: '#/components/schemas/User%20schema'
     post:
       tags:
         - admins
       summary: Adds a user
-      description: Adds a user to the system
+      description: You can create a new user by using this endpoint
       security:
         BearerAuth: []
-      parameters:
-        - in: query
-          name: searchString
-          description: pass an optional search string for looking up inventory
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: skip
-          description: number of records to skip for pagination
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: maximum number of records to return
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
-        - in: query
-          name: getId
-          description: get the id of a user
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
-        - in: query
-          name: get Id
-          description: get the id of a user
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
       responses:
         '201':
-          description: item created
+          description: Created
         '400':
-          description: 'invalid input, object invalid'
+          description: Invalid input or object
         '409':
-          description: an existing item already exists
+          description: The specified book's object already exists
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User%20Item'
-        description: Inventory item to add
-    delete:
-      tags:
-        - admins
-      summary: Deletes a user
-      description: Deletes a user
-      parameters:
-        - '200':
-            description: User that was deleted
-          in: path
-          name: userId
-          schema:
-            type: string
-          required: true
-          description: string id of user to delete
-          responses: null
-    patch:
-      tags:
-        - admins
-      summary: Updates a user
-      security:
-        BearerAuth: []
-      responses:
-        $ref: '#/paths/~1books/post/responses'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User%20Item'
-        description: book list information to update
+              $ref: '#/components/schemas/User%20schema'
+        description: User object to add
   '/users/{userId}':
     get:
       tags:
-        - users
         - admins
-      summary: Get a user by ID
-      parameters:
-        - name: authorId
-          in: path
-          required: true
-          description: Parameter description in CommonMark or HTML.
-          schema:
-            type: integer
-            format: int64
-            minimum: 1
-      responses:
-        '200':
-          description: OK.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User%20Item'
-        '400':
-          description: bad input parameter
-    patch:
-      tags:
-        - admins
-      summary: Updates a user
-      security:
-        BearerAuth: []
-      responses:
-        $ref: '#/paths/~1books/post/responses'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User%20Item'
-        description: user information to update
-    post:
-      tags:
-        - admins
-      summary: Adds a user
+      summary: Get a single user
+      description: You can get a single user by adding the id as a parameter
       parameters:
         - name: userId
           in: path
           required: true
-          description: Parameter description in CommonMark or HTML.
+          description: id of the user
           schema:
             type: integer
             format: int64
             minimum: 1
-      description: Adds a user item to the system
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User%20schema'
+        '400':
+          description: Bad id parameter
+        '404':
+          description: User not found
+    patch:
+      tags:
+        - admins
+      summary: Updates a user
+      description: You can update an existing user by sending an object and providing the id of the user you want to update
       security:
         BearerAuth: []
       responses:
-        $ref: '#/paths/~1books/post/responses'
+        '200':
+          description: OK
+        '400':
+          description: Invalid input or object
+        '404':
+          description: User not found
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User%20Item'
-        description: user to add
+              $ref: '#/components/schemas/User%20schema'
+        description: User object to update
     delete:
       tags:
         - admins
-      summary: Deletes a user
-      description: Deletes a user
+      summary: Removes a user
+      description: Removes a user by adding the id as the parameter
       parameters:
         - in: path
-          name: authorId
+          name: userId
           schema:
-            type: string
+            type: integer
+            format: int64
+            minimum: 1
           required: true
-          description: string id of user to delete
+          description: id of user to delete
       responses:
-        '200':
-          description: User that was deleted
+        '204':
+          description: No context - successfully deleted
+        '404':
+          description: User not found
   /authors:
     get:
       tags:
         - admins
         - users
-      summary: searches authors
-      operationId: searchAuthors
-      description: |
-        By passing in the appropriate options, you can search for
-        available authors in the system
+      summary: Get all authors
+      description: You can access the list of all authors by using this endpoint
       security:
         BearerAuth: []
-      parameters:
-        - in: query
-          name: searchString
-          description: pass an optional search string for looking up inventory
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: skip
-          description: number of records to skip for pagination
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: maximum number of records to return
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
+      parameters: null
       responses:
         '200':
-          description: search results matching criteria
+          description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/author%20Item'
+                  $ref: '#/components/schemas/Author%20schema'
         '400':
-          description: bad input parameter
+          description: Bad input parameter
     post:
       tags:
         - admins
-      summary: adds an author item
-      description: Adds an author item to the system
+      summary: Adds an author
+      description: You can create a new author by using this endpoint
       security:
         BearerAuth: []
       responses:
-        $ref: '#/paths/~1authors/get/responses'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author%20schema'
+        '400':
+          description: Bad input
+        '409':
+          description: The specified author's object already exists
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/author%20Item'
-        description: Author item to add
-    patch:
-      tags:
-        - admins
-      summary: updates authors list
-      security:
-        BearerAuth: []
-      responses:
-        $ref: '#/paths/~1authors/get/responses'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/book%20Item'
-        description: authors list update
-    delete:
-      tags:
-        - admins
-      summary: removes an author
-      description: Delete authors
-      parameters:
-        - in: path
-          name: authorId
-          schema:
-            type: string
-          required: true
-          description: string id of user to delete
-      responses:
-        '200':
-          description: User that was deleted
+              $ref: '#/components/schemas/Author%20schema'
+        description: Author object to add
   '/authors/{authorId}':
     get:
       tags:
         - users
         - admins
-      summary: Get an author by ID
+      summary: Get a single author
+      description: You can get a single author by adding the id as a parameter
       parameters:
         - name: authorId
           in: path
           required: true
-          description: Parameter description in CommonMark or HTML.
+          description: id of the author
           schema:
             type: integer
             format: int64
             minimum: 1
       responses:
         '200':
-          description: OK.
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/author%20Item'
+                $ref: '#/components/schemas/Author%20schema'
         '400':
-          description: bad input parameter
+          description: Bad input parameter
+        '404':
+          description: Author not found
     patch:
       tags:
         - admins
       summary: Updates an author
+      description: You can update an existing author by sending an object and providing the id of the author you want to update
+      security:
+        BearerAuth: []
       parameters:
         - name: authorId
           in: path
           required: true
-          description: Parameter description in CommonMark or HTML.
+          description: id of the author you want to update
           schema:
             type: integer
             format: int64
             minimum: 1
-      security:
-        BearerAuth: []
       responses:
-        $ref: '#/paths/~1authors/get/responses'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author%20schema'
+        '400':
+          description: Bad input parameter
+        '404':
+          description: Author not found
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/author%20Item'
-    post:
-      tags:
-        - admins
-      summary: Adds an author
-      parameters:
-        - name: authorId
-          in: path
-          required: true
-          description: Parameter description in CommonMark or HTML.
-          schema:
-            type: integer
-            format: int64
-            minimum: 1
-      description: Adds an author item to the system
-      security:
-        BearerAuth: []
-      responses:
-        $ref: '#/paths/~1authors/get/responses'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/author%20Item'
-        description: Author item to add
+              $ref: '#/components/schemas/Author%20schema'
     delete:
       tags:
         - admins
       summary: Removes an author
-      description: Delete authors
+      description: Removes an author by adding the id as the parameter
       parameters:
         - in: path
           name: authorId
           schema:
-            type: string
+            type: integer
+            format: int64
+            minimum: 1
           required: true
-          description: string id of user to delete
+          description: id of the author to delete
       responses:
-        '200':
-          description: User that was deleted
+        '204':
+          description: No context - successfully deleted
+        '404':
+          description: Author not found
 components:
   schemas:
-    book Item:
+    Book schema:
       type: object
       required:
         - isbn
@@ -535,11 +398,11 @@ components:
         - return_date
       properties:
         id:
-          type: string
+          type: number
           description: auto generated id of the book
           example: 1
         isbn:
-          type: string
+          type: number
           format: uuid
           example: 978-1781250914
         title:
@@ -559,7 +422,7 @@ components:
           type: string
           example: borrowed
         borrower_id:
-          type: string
+          type: number
           example: d290f1ee-6c54-4b01-90e6-d701748f0851
         published_date:
           type: string
@@ -573,7 +436,7 @@ components:
           type: string
           format: date-time
           example: '2016-08-29T09:12:33.001Z'
-    User Item:
+    User schema:
       type: object
       required:
         - id
@@ -583,7 +446,7 @@ components:
         - role
       properties:
         id:
-          type: string
+          type: number
           format: uuid
           example: d290f1ee-6c54-4b01-90e6-d701748f0851
         firstname:
@@ -598,7 +461,7 @@ components:
         role:
           type: string
           example: admin
-    author Item:
+    Author schema:
       type: object
       required:
         - id
@@ -607,7 +470,7 @@ components:
         - email
       properties:
         id:
-          type: string
+          type: number
           format: uuid
           example: d290f1ee-6c54-4b01-90e6-d701748f0851
         firstname:
@@ -619,39 +482,3 @@ components:
         email:
           type: string
           example: you@company.com
-    Manufacturer:
-      required:
-        - name
-      properties:
-        name:
-          type: string
-          example: ACME Corporation
-        homePage:
-          type: string
-          format: url
-          example: 'https://www.acme-corp.com'
-        phone:
-          type: string
-          example: 408-867-5309
-      type: object
-    securitySchemes:
-      BasicAuth:
-        type: http
-        scheme: basic
-      BearerAuth:
-        type: http
-        scheme: bearer
-      ApiKeyAuth:
-        type: apiKey
-        in: header
-        name: X-API-Key
-      OAuth2:
-        type: oauth2
-        flows:
-          authorizationCode:
-            authorizationUrl: 'https://example.com/oauth/authorize'
-            tokenUrl: 'https://example.com/oauth/token'
-            scopes:
-              read: Grants read access
-              write: Grants write access
-              admin: Grants access to admin operations

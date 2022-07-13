@@ -12,11 +12,11 @@ required:
   - return_date
 properties:
   id:
-    type: string
+    type: number
     description: auto generated id of the book
     example: 1
   isbn:
-    type: string
+    type: number
     format: uuid
     example: 978-1781250914
   title:
@@ -36,7 +36,7 @@ properties:
     type: string
     example: borrowed
   borrower_id:
-    type: string
+    type: number
     example: d290f1ee-6c54-4b01-90e6-d701748f0851
   published_date:
     type: string

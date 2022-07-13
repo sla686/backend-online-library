@@ -36,14 +36,14 @@ paths:
     $ref: "./components/authors/author/author.yaml"
 components:
   schemas:
-    book Item:
+    Book schema:
       $ref: "./components/schemas/bookItem.yaml"
-    User Item:
+    User schema:
       $ref: "./components/schemas/userItem.yaml"
-    author Item:
+    Author schema:
       $ref: "./components/schemas/authorItem.yaml"
 
-    Manufacturer:
-      $ref: "./components/schemas/Manufacturer.yaml"
-    securitySchemes:
-      $ref: "./components/schemas/securitySchemes.yaml"
+    # Manufacturer:
+    #   $ref: "./components/schemas/Manufacturer.yaml"
+    # securitySchemes:
+    #   $ref: "./components/schemas/securitySchemes.yaml"

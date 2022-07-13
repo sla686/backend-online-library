@@ -1,110 +1,98 @@
 get:
   tags:
     - admins
-  summary: Searches users
-  operationId: searchUsers
-  description: |
-    By passing in the appropriate options, you can search for
-    available users in the system
+  summary: Get all users
+  description: You can access the list of all users by using this endpoint
+  # operationId: userId
   security:
     BearerAuth: []
   parameters:
     $ref: "./getParameters.yaml"
   responses:
     "200":
-      description: search results matching criteria
+      description: Success
       content:
         application/json:
           schema:
             type: array
             items:
               $ref: "../schemas/userItem.yaml"
-    "400":
-      description: bad input parameter
 post:
   tags:
     - admins
   summary: Adds a user
-  description: Adds a user to the system
+  description: You can create a new user by using this endpoint
   security:
     BearerAuth: []
-  parameters:
-    - in: query
-      name: searchString
-      description: pass an optional search string for looking up inventory
-      required: false
-      schema:
-        type: string
-    - in: query
-      name: skip
-      description: number of records to skip for pagination
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-    - in: query
-      name: limit
-      description: maximum number of records to return
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-        maximum: 50
-    - in: query
-      name: getId
-      description: get the id of a user
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-        maximum: 50
-    - in: query
-      name: get Id
-      description: get the id of a user
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-        maximum: 50
+  # parameters:
+  #   - in: query
+  #     name: searchString
+  #     description: pass an optional search string for looking up inventory
+  #     required: false
+  #     schema:
+  #       type: string
+  #   - in: query
+  #     name: skip
+  #     description: number of records to skip for pagination
+  #     schema:
+  #       type: integer
+  #       format: int32
+  #       minimum: 0
+  #   - in: query
+  #     name: limit
+  #     description: maximum number of records to return
+  #     schema:
+  #       type: integer
+  #       format: int32
+  #       minimum: 0
+  #       maximum: 50
+  #   - in: query
+  #     name: getId
+  #     description: id of a user
+  #     schema:
+  #       type: integer
+  #       format: int32
+  #       minimum: 0
+  #       maximum: 50
   responses:
     "201":
-      description: item created
+      description: Created
     "400":
-      description: "invalid input, object invalid"
+      description: Invalid input or object
     "409":
-      description: an existing item already exists
+      description: The specified book's object already exists
   requestBody:
     content:
       application/json:
         schema:
           $ref: "../schemas/userItem.yaml"
-    description: Inventory item to add
-delete:
-  tags:
-    - admins
-  summary: Deletes a user
-  description: Deletes a user
-  parameters:
-    - in: path
-      name: userId
-      schema:
-        type: string
-      required: true
-      description: string id of user to delete
-      responses:
-      200:
-        description: User that was deleted
-patch:
-  tags:
-    - admins
-  summary: Updates a user
-  security:
-    BearerAuth: []
-  responses:
-    $ref: "../books/postResponses.yaml"
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: "../schemas/userItem.yaml"
-    description: book list information to update
+    description: User object to add
+# delete:
+#   tags:
+#     - admins
+#   summary: Deletes a user
+#   description: Deletes a user
+#   parameters:
+#     - in: path
+#       name: userId
+#       schema:
+#         type: string
+#       required: true
+#       description: string id of user to delete
+#       responses:
+#       200:
+#         description: User that was deleted
+# patch:
+#   tags:
+#     - admins
+#   summary: Updates a user
+#   security:
+#     BearerAuth: []
+#   responses:
+#     $ref: "../books/postResponses.yaml"
+#   requestBody:
+#     content:
+#       application/json:
+#         schema:
+#           $ref: "../schemas/userItem.yaml"
+#     description: book list information to update

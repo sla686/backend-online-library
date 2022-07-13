@@ -2,64 +2,65 @@ get:
   tags:
     - admins
     - users
-  summary: list of Books
-  operationId: searchBooks
-  description: |
-    By passing in the appropriate options, you can search for
-    available Books in the system
+  summary: Get all books
+  description: You can access the list of all books by using this endpoint
+  # operationId: getBooks
   security:
     BearerAuth: []
   responses:
     "200":
-      description: search results matching criteria
+      description: OK
       content:
         application/json:
           schema:
           type: array
           $ref: "../schemas/bookItem.yaml"
-    "400":
-      description: bad input parameter
 post:
   tags:
     - admins
-  summary: adds a book item
-  description: Adds a book item to the system
+  summary: Adds a book
+  description: You can create a new book by using this endpoint
   security:
     BearerAuth: []
   responses:
-    $ref: "./postResponses.yaml"
+    "201":
+      description: Created
+    "400":
+      description: Invalid input or object
+    "409":
+      description: The specified book's object already exists
   requestBody:
     content:
       application/json:
         schema:
           $ref: "../schemas/bookItem.yaml"
-    description: Inventory item to add
-patch:
-  tags:
-    - admins
-  summary: updates books
-  security:
-    BearerAuth: []
-  responses:
-    $ref: "./postResponses.yaml"
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: "../schemas/bookItem.yaml"
-    description: book list information to update
-delete:
-  tags:
-    - admins
-  summary: removes a book item
-  description: Delete books
-  parameters:
-    - in: path
-      name: bookId
-      schema:
-        type: string
-      required: true
-      description: string id of book to delete
-  responses:
-    "200":
-      description: book that was deleted
+    description: Book object to add
+# patch:
+#   tags:
+#     - admins
+#   summary: updates books
+#   security:
+#     BearerAuth: []
+#   responses:
+#     $ref: "./postResponses.yaml"
+#   requestBody:
+#     content:
+#       application/json:
+#         schema:
+#           $ref: "../schemas/bookItem.yaml"
+#     description: book list information to update
+# delete:
+#   tags:
+#     - admins
+#   summary: removes a book item
+#   description: Delete books
+#   parameters:
+#     - in: path
+#       name: bookId
+#       schema:
+#         type: string
+#       required: true
+#       description: string id of book to delete
+#   responses:
+#     "200":
+#       description: book that was deleted

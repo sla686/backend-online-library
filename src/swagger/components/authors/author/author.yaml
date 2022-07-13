@@ -2,83 +2,102 @@ get:
   tags:
     - users
     - admins
-  summary: Get an author by ID
+  summary: Get a single author
+  description: You can get a single author by adding the id as a parameter
   parameters:
     - name: authorId
       in: path
       required: true
-      description: Parameter description in CommonMark or HTML.
+      description: id of the author
       schema:
         type: integer
         format: int64
         minimum: 1
   responses:
-    200:
-      description: OK.
+    "200":
+      description: OK
       content:
         application/json:
           schema:
             $ref: "../../schemas/authorItem.yaml"
-    400:
-      description: bad input parameter
+    "400":
+      description: Bad input parameter
+    "404":
+      description: Author not found
 patch:
   tags:
     - admins
   summary: Updates an author
+  description: You can update an existing author by sending an object and providing the id of the author you want to update
+  security:
+    BearerAuth: []
   parameters:
     - name: authorId
       in: path
       required: true
-      description: Parameter description in CommonMark or HTML.
+      description: id of the author you want to update
       schema:
         type: integer
         format: int64
         minimum: 1
-  security:
-    BearerAuth: []
   responses:
-    $ref: "../postResponses.yaml"
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/authorItem.yaml"
+    "400":
+      description: Bad input parameter
+    "404":
+      description: Author not found
   requestBody:
     content:
       application/json:
         schema:
           $ref: "../../schemas/authorItem.yaml"
-post:
-  tags:
-    - admins
-  summary: Adds an author
-  parameters:
-    - name: authorId
-      in: path
-      required: true
-      description: Parameter description in CommonMark or HTML.
-      schema:
-        type: integer
-        format: int64
-        minimum: 1
-  description: Adds an author item to the system
-  security:
-    BearerAuth: []
-  responses:
-    $ref: "../postResponses.yaml"
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: "../../schemas/authorItem.yaml"
-    description: Author item to add
+# post:
+#   tags:
+#     - admins
+#   summary: Adds an author
+#   parameters:
+#     - name: authorId
+#       in: path
+#       required: true
+#       description: Parameter description in CommonMark or HTML.
+#       schema:
+#         type: integer
+#         format: int64
+#         minimum: 1
+#   description: Adds an author item to the system
+#   security:
+#     BearerAuth: []
+#   responses:
+#     $ref: "../postResponses.yaml"
+#   requestBody:
+#     content:
+#       application/json:
+#         schema:
+#           $ref: "../../schemas/authorItem.yaml"
+#     description: Author item to add
 delete:
   tags:
     - admins
   summary: Removes an author
-  description: Delete authors
+  description: Removes an author by adding the id as the parameter
   parameters:
     - in: path
       name: authorId
       schema:
-        type: string
+        type: integer
+        format: int64
+        minimum: 1
       required: true
-      description: string id of user to delete
+      description: id of the author to delete
   responses:
-    "200":
-      description: User that was deleted
+    "204":
+      description: No context - successfully deleted
+    "404":
+      description: Author not found

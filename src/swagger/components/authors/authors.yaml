@@ -2,58 +2,76 @@ get:
   tags:
     - admins
     - users
-  summary: searches authors
-  operationId: searchAuthors
-  description: |
-    By passing in the appropriate options, you can search for
-    available authors in the system
+  summary: Get all authors
+  description: You can access the list of all authors by using this endpoint
+  # operationId: getAuthors
   security:
     BearerAuth: []
   parameters:
-    $ref: "./parameters.yaml"
+    # $ref: "./parameters.yaml"
   responses:
-    $ref: "./postResponses.yaml"
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../schemas/authorItem.yaml"
+    "400":
+      description: Bad input parameter
 post:
   tags:
     - admins
-  summary: adds an author item
-  description: Adds an author item to the system
+  summary: Adds an author
+  description: You can create a new author by using this endpoint
   security:
     BearerAuth: []
   responses:
-    $ref: "./postResponses.yaml"
+    "201":
+      description: Created
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../schemas/authorItem.yaml"
+    "400":
+      description: Bad input
+    "409":
+      description: The specified author's object already exists
   requestBody:
     content:
       application/json:
         schema:
           $ref: "../schemas/authorItem.yaml"
-    description: Author item to add
-patch:
-  tags:
-    - admins
-  summary: updates authors list
-  security:
-    BearerAuth: []
-  responses:
-    $ref: "./postResponses.yaml"
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: "../schemas/bookItem.yaml"
-    description: authors list update
-delete:
-  tags:
-    - admins
-  summary: removes an author
-  description: Delete authors
-  parameters:
-    - in: path
-      name: authorId
-      schema:
-        type: string
-      required: true
-      description: string id of user to delete
-  responses:
-    "200":
-      description: User that was deleted
+    description: Author object to add
+# patch:
+#   tags:
+#     - admins
+#   summary: updates authors list
+#   security:
+#     BearerAuth: []
+#   responses:
+#     $ref: "./postResponses.yaml"
+#   requestBody:
+#     content:
+#       application/json:
+#         schema:
+#           $ref: "../schemas/bookItem.yaml"
+#     description: authors list update
+# delete:
+#   tags:
+#     - admins
+#   summary: removes an author
+#   description: Delete authors
+#   parameters:
+#     - in: path
+#       name: authorId
+#       schema:
+#         type: string
+#       required: true
+#       description: string id of user to delete
+#   responses:
+#     "200":
+#       description: User that was deleted
