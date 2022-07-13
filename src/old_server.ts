@@ -9,7 +9,7 @@ import path from "path";
 
 //import swaggerDocument from './swagger/swagger.json'
 const swaggerDocument: JsonObject | undefined = YAML.load(
-  path.join(__dirname, "../_build/swagger.yaml")
+  path.join(__dirname, "./swagger/build/swagger.yaml")
 );
 
 //initialize the express server
