@@ -4,8 +4,8 @@ import booksController from "../controllers/booksController";
 
 const booksRoute = Router();
 booksRoute.get("/", booksController.getAllBooks);
+booksRoute.post("/", booksController.postBooks);
 booksRoute.get("/:bookId", booksController.getSingleBook);
-booksRoute.post("/", booksController.postSinglebook);
 // booksRoute.patch('/:bookId', booksController.patchSinglebook)
 // booksRoute.delete("/books/:bookId", booksController.deleteSingleBook);
 
