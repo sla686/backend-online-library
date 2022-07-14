@@ -32,7 +32,6 @@ if (process.env.NODE_ENV === "production") {
   app.use(helmet());
 }
 
-<<<<<<< HEAD:src/server.ts
 // Experimenting with GET routes - they all work!
 // Remember that order matters!
 // That is why the main "/" route is below all other routes!
@@ -50,8 +49,6 @@ app.get("/cart", (req, res) => {
   res.send("Welcome to GET /cart");
 });
 
-=======
->>>>>>> a3d376de8a61c7a117d9afe47aecccf40c355cab:src/old_server.ts
 // Adding swagger router (according to the task #1 in the README file)
 app.use(
   "/",
