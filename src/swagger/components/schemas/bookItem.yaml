@@ -6,15 +6,8 @@ required:
   - publisher
   - authors
   - status
-  - borrower_id
   - published_date
-  - borrow_date
-  - return_date
 properties:
-  id:
-    type: number
-    description: auto generated id of the book
-    example: 1
   isbn:
     type: number
     format: uuid

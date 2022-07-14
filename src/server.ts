@@ -6,6 +6,7 @@ import "express-async-errors";
 import swaggerUi, { JsonObject } from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
+import booksRoute from "./routes/booksRoute";
 
 //import swaggerDocument from './swagger/swagger.json'
 const swaggerDocument: JsonObject | undefined = YAML.load(
@@ -17,6 +18,7 @@ const app = express();
 
 // Common middlewaresm
 app.use(express.json());
+app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -37,9 +39,7 @@ app.get("/admin", (req, res) => {
   res.send("Welcome to GET /admin");
 });
 
-app.get("/books", (req, res) => {
-  res.send("Welcome to GET /books");
-});
+app.get("/books", booksRoute);
 
 app.get("/authors", (req, res) => {
   res.send("Welcome to GET /authors");
