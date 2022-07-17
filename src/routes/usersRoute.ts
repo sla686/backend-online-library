@@ -1,10 +1,11 @@
-import { Request, Response, Router } from "express";
+import  express, { Router, Request, Response, NextFunction } from "express";
+import usersController from "../controllers/usersController";
 
 const usersRoute = Router();
-usersRoute.get("/", (req: Request, res: Response) => {
-  res.send("Get route from userRoute");
-});
-usersRoute.post("/", (req: Request, res: Response) => {
-  res.send("Post route from userRoute");
-});
+usersRoute.get("/", usersController.getAllUsers);
+usersRoute.post("/", usersController.postSingleUser);
+usersRoute.get("/:userId", usersController.getSingleUser);
+usersRoute.patch("/:userId", usersController.patchSingleUser);
+usersRoute.post("/:userId", usersController.postSingleUser);
+
 export default usersRoute;
