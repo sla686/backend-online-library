@@ -19,7 +19,7 @@ const postBooks = (req: Request, res: Response) => {
     status,
     published_date,
   };
-  return res.status(201).json(newBook);
+  return res.status(201).json(`response: ${newBook}`);
 };
 /********************SINGLE BOOK *********************** */
 
@@ -32,7 +32,14 @@ const patchSinglebook = (req: Request, res: Response) => {
 };
 
 const deleteSinglebook = (req: Request, res: Response) => {
+  const bookId = req.params.bookId;
   return res.send("delete method for single book");
 };
 
-export default { getAllBooks, getSingleBook, patchSinglebook, postBooks };
+export default {
+  getAllBooks,
+  getSingleBook,
+  patchSinglebook,
+  postBooks,
+  deleteSinglebook,
+};
