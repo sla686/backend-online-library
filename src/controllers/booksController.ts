@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
 import { CustomError } from "ErrorType";
 import uuid from "uuid4";
-import Book from "BookType";
+import BookType from "BookType";
+import Book from "../models/books";
 
 const getAllBooks = (req: Request, res: Response) => {
   return res.send("response: books list!!!");
 };
-
-const postBooks = (req: Request, res: Response) => {
+const postBooks = async (req: Request, res: Response) => {
   const { title, description, publisher, authors, status, published_date } =
     req.body;
-  const newBook: Book = {
+  const newBook = await Book.create({
     isbn: uuid(),
     title,
     description,
@@ -18,8 +18,9 @@ const postBooks = (req: Request, res: Response) => {
     authors,
     status,
     published_date,
-  };
-  return res.status(201).json(`response: ${newBook}`);
+  }).then((data) => {
+    res.json(data);
+  });
 };
 /********************SINGLE BOOK *********************** */
 
