@@ -25,8 +25,10 @@ const postBooks = async (req: Request, res: Response) => {
 };
 /********************SINGLE BOOK *********************** */
 
-const getSingleBook = (req: Request, res: Response) => {
-  return res.send(`response:${req.params.bookId}`);
+const getSingleBook = async (req: Request, res: Response) => {
+  await Book.find({ isbn: req.params.bookId }).then((data) => {
+    res.json(data);
+  });
 };
 
 const patchSinglebook = (req: Request, res: Response) => {

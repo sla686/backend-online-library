@@ -62,27 +62,16 @@ app.use(
 const viewsDir = path.join(__dirname, "views");
 app.set("views", viewsDir);
 
-<<<<<<< HEAD
-const DB =
-  "mongodb+srv://admin:admin@cluster0.xfsqs.mongodb.net/?retryWrites=true&w=majority";
-=======
 // DATABASE IS HERE
 // const DB =
 //   "mongodb+srv://admin:admin@cluster0.xfsqs.mongodb.net/test?retryWrites=true&w=majority";
->>>>>>> 5e0d831d0c8c3e642de3b330b0f80aac36814f4b
 
 const DB = process.env.DB_CONNECTION || "";
 mongoose
   .connect(DB)
   .then(() => console.log("CONNECTION TO DATABASE SUCCESSFUL!"))
-<<<<<<< HEAD
-  .catch((e) => {
-    console.log("CANNOT CONNECT TO DATABASE");
-  });
-=======
   .catch((err) => console.log("ERROR: " + err));
 
->>>>>>> 5e0d831d0c8c3e642de3b330b0f80aac36814f4b
 // Set static view from public dir
 /* const staticDir = path.join(__dirname, 'public');
 app.use(express.static(staticDir)); */

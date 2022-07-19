@@ -1,10 +1,7 @@
 import mongoose from "mongoose";
 
-// const Schema = mongoose.Schema;
-// Confusing! Use modern ES destructuring as follows:
 const { Schema } = mongoose;
 
-// Or you can also just type "mongoose.Schema"
 const bookSchema = new Schema({
   isbn: {
     type: String,
