@@ -7,13 +7,13 @@ import swaggerUi, { JsonObject } from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
 import dotenv from "dotenv";
-dotenv.config({ path: "./.env" });
+// I have no idea why this is OK but it allows to use .env
+dotenv.config();
 
 import booksRoute from "./routes/booksRoute";
 import usersRoute from "./routes/usersRoute";
 import authorsRoute from "./routes/authorsRoute";
 import mongoose from "mongoose";
-// import "dotenv/config";
 
 //import swaggerDocument from './swagger/swagger.json'
 const swaggerDocument: JsonObject | undefined = YAML.load(
