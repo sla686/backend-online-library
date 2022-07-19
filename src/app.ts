@@ -10,6 +10,8 @@ import path from "path";
 import booksRoute from "./routes/booksRoute";
 import usersRoute from "./routes/usersRoute";
 import authorsRoute from "./routes/authorsRoute";
+import mongoose from "mongoose";
+import "dotenv/config";
 
 //import swaggerDocument from './swagger/swagger.json'
 const swaggerDocument: JsonObject | undefined = YAML.load(
@@ -57,6 +59,11 @@ app.use(
 // Set dynamic view from views dir
 const viewsDir = path.join(__dirname, "views");
 app.set("views", viewsDir);
+
+mongoose.connect(
+  "mongodb+srv://admin:admin@cluster0.xfsqs.mongodb.net/?retryWrites=true&w=majority",
+  () => console.log("CONNECTION TO DATABASE SUCCESSFUL!")
+);
 
 // Set static view from public dir
 /* const staticDir = path.join(__dirname, 'public');
