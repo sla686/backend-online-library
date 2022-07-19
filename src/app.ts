@@ -6,12 +6,14 @@ import "express-async-errors";
 import swaggerUi, { JsonObject } from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
+import dotenv from "dotenv";
+dotenv.config({ path: "./.env" });
 
 import booksRoute from "./routes/booksRoute";
 import usersRoute from "./routes/usersRoute";
 import authorsRoute from "./routes/authorsRoute";
 import mongoose from "mongoose";
-import "dotenv/config";
+// import "dotenv/config";
 
 //import swaggerDocument from './swagger/swagger.json'
 const swaggerDocument: JsonObject | undefined = YAML.load(
@@ -61,12 +63,14 @@ const viewsDir = path.join(__dirname, "views");
 app.set("views", viewsDir);
 
 // DATABASE IS HERE
-const DB =
-  "mongodb+srv://admin:admin@cluster0.xfsqs.mongodb.net/test?retryWrites=true&w=majority";
+// const DB =
+//   "mongodb+srv://admin:admin@cluster0.xfsqs.mongodb.net/test?retryWrites=true&w=majority";
 
+const DB = process.env.DB_CONNECTION || "";
 mongoose
   .connect(DB)
-  .then(() => console.log("CONNECTION TO DATABASE SUCCESSFUL!"));
+  .then(() => console.log("CONNECTION TO DATABASE SUCCESSFUL!"))
+  .catch((err) => console.log("ERROR: " + err));
 
 // Set static view from public dir
 /* const staticDir = path.join(__dirname, 'public');
