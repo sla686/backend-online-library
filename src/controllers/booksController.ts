@@ -4,8 +4,9 @@ import uuid from "uuid4";
 import BookType from "BookType";
 import Book from "../models/books";
 
-const getAllBooks = (req: Request, res: Response) => {
-  return res.send("response: books list!!!");
+const getAllBooks = async (req: Request, res: Response) => {
+  const books = await Book.find();
+  res.json(books);
 };
 const postBooks = async (req: Request, res: Response) => {
   const { title, description, publisher, authors, status, published_date } =
