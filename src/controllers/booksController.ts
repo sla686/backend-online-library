@@ -35,10 +35,13 @@ const patchSinglebook = (req: Request, res: Response) => {
   return res.send("patch method for single book");
 };
 
-const deleteSinglebook = (req: Request, res: Response) => {
+const deleteSinglebook = async(req: Request, res: Response) => {
   const bookId = req.params.bookId;
-  return res.send("delete method for single book");
-};
+  await Book.deleteOne({ isbn: req.params.bookId});
+
+  console.log(await Book.countDocuments({ isbn: bookId })); // 0
+}
+
 
 export default {
   getAllBooks,
