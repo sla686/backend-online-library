@@ -7,6 +7,6 @@ booksRoute.get("/", booksController.getAllBooks);
 booksRoute.post("/", booksController.postBooks);
 booksRoute.get("/:bookId", booksController.getSingleBook);
 // booksRoute.patch('/:bookId', booksController.patchSinglebook)
-booksRoute.delete("/books/:bookId", booksController.deleteSinglebook);
+booksRoute.delete("/:bookId", booksController.deleteSinglebook);
 
 export default booksRoute;

@@ -35,12 +35,22 @@ const patchSinglebook = (req: Request, res: Response) => {
   return res.send("patch method for single book");
 };
 
+<<<<<<< HEAD
 const deleteSinglebook = async (req: Request, res: Response) => {
   await Book.deleteOne({ isbn: req.params.bookId })
     .then
     // console.log("successfully deleted")
     ();
 };
+=======
+const deleteSinglebook = async(req: Request, res: Response) => {
+  const bookId = req.params.bookId;
+  await Book.deleteOne({ isbn: req.params.bookId});
+
+  console.log(await Book.countDocuments({ isbn: bookId })); // 0
+}
+
+>>>>>>> a06708a000b366805aa61e407cadd19981ea80d6
 
 export default {
   getAllBooks,
