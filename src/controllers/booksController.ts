@@ -26,31 +26,25 @@ const postBooks = async (req: Request, res: Response) => {
 /********************SINGLE BOOK *********************** */
 
 const getSingleBook = async (req: Request, res: Response) => {
-  await Book.find({ isbn: req.params.bookId }).then((data) => {
+  await Book.findById({ isbn: req.params.bookId }).then((data) => {
     res.json(data);
   });
 };
 
-const patchSinglebook = (req: Request, res: Response) => {
-  return res.send("patch method for single book");
+const patchSinglebook = async (req: Request, res: Response) => {
+  const id = req.params.bookId;
+  const postBookData: BookType = req.body;
+  const book = await Book.findByIdAndUpdate(id, postBookData, { new: true });
+  if (book) {
+    res.send(book);
+  }
 };
-
-<<<<<<< HEAD
 const deleteSinglebook = async (req: Request, res: Response) => {
-  await Book.deleteOne({ isbn: req.params.bookId })
-    .then
-    // console.log("successfully deleted")
-    ();
-};
-=======
-const deleteSinglebook = async(req: Request, res: Response) => {
   const bookId = req.params.bookId;
-  await Book.deleteOne({ isbn: req.params.bookId});
+  await Book.deleteOne({ isbn: req.params.bookId });
 
   console.log(await Book.countDocuments({ isbn: bookId })); // 0
-}
-
->>>>>>> a06708a000b366805aa61e407cadd19981ea80d6
+};
 
 export default {
   getAllBooks,
