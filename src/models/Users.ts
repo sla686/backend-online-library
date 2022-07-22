@@ -38,7 +38,7 @@ const userSchema = new Schema<UserDocument>({
     required: true,
     validate: {
       validator: (value: string) => {
-        return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+        return /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(value);
       },
       message: (props) => `${props.value} is not a valid password`,
     },
