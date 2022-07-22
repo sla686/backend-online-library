@@ -1,45 +1,91 @@
 import { Request, Response } from "express";
+import { CustomError } from "ErrorType";
 import User from "../models/Users";
 
 const getAllUsers = async (req: Request, res: Response) => {
-  const user = await User.find();
-  res.json(user);
+  const books = await User.find();
+  res.json(books);
 };
-const createUser = async (req: Request, res: Response) => {
-  const { firstname, lastname, email, role } = req.body;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  const newUser = await User.create({
-    firstname,
-    lastname,
-    email,
-    role
-    
+const postUsers = async (req: Request, res: Response) => {
+  const { firstname, lastname, email, role} =
+    req.body;
+  const newBook = await User.create({
+  firstname,
+  lastname,
+  email,
+  role
   }).then((data) => {
     res.json(data);
   });
 };
+/********************SINGLE USER *********************** */
 
-const getSingleUser = (req: Request, res: Response) => {
-  return res.send(`response:${req.params.userId}`);
-};
-
-const postSingleUser = (req: Request, res: Response) => {
-  return res.send("add a user");
+const getSingleUser = async (req: Request, res: Response) => {
+  await User.find({ isbn: req.params.userId }).then((data) => {
+    res.json(data);
+  });
 };
 
 const patchSingleUser = (req: Request, res: Response) => {
-  return res.send(`updates:${req.params.userId}`);
+  return res.send("patch method for single book");
 };
 
-const deleteSingleUser = (req: Request, res: Response) => {
-  return res.send(`delete:${req.params.userId}`);
+const deleteSingleUser = async (req: Request, res: Response) => {
+  await User.deleteOne({ isbn: req.params.userId })
+    .then
+    // console.log("successfully deleted")
+    ();
 };
 
 export default {
   getAllUsers,
-  createUser,
+  postUsers,
   getSingleUser,
   patchSingleUser,
-  postSingleUser,
   deleteSingleUser,
 };
+// import { Request, Response } from "express";
+// import User from "../models/Users";
+
+// const getAllUsers = async (req: Request, res: Response) => {
+//   const user = await User.find();
+//   res.json(user);
+// };
+// const createUser = async (req: Request, res: Response) => {
+//   const { firstname, lastname, email, role } = req.body;
+//   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+//   const newUser = await User.create({
+//     firstname,
+//     lastname,
+//     email,
+//     role
+    
+//   }).then((data) => {
+//     res.json(data);
+//   });
+// };
+
+// const getSingleUser = (req: Request, res: Response) => {
+//   return res.send(`response:${req.params.userId}`);
+// };
+
+// const postSingleUser = (req: Request, res: Response) => {
+//   return res.send("add a user");
+// };
+
+// const patchSingleUser = (req: Request, res: Response) => {
+//   return res.send(`updates:${req.params.userId}`);
+// };
+
+// const deleteSingleUser = (req: Request, res: Response) => {
+//   return res.send(`delete:${req.params.userId}`);
+// };
+
+// export default {
+//   getAllUsers,
+//   createUser,
+//   getSingleUser,
+//   patchSingleUser,
+//   postSingleUser,
+//   deleteSingleUser,
+// };
