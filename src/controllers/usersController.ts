@@ -3,17 +3,17 @@ import { CustomError } from "ErrorType";
 import User from "../models/Users";
 
 const getAllUsers = async (req: Request, res: Response) => {
-  const books = await User.find();
-  res.json(books);
+  const users = await User.find();
+  res.json(users);
 };
 const postUsers = async (req: Request, res: Response) => {
-  const { firstname, lastname, email, role} =
-    req.body;
+  const { firstname, lastname, email, password, role } = req.body;
   const newBook = await User.create({
-  firstname,
-  lastname,
-  email,
-  role
+    firstname,
+    lastname,
+    email,
+    password,
+    role,
   }).then((data) => {
     res.json(data);
   });
@@ -21,7 +21,7 @@ const postUsers = async (req: Request, res: Response) => {
 /********************SINGLE USER *********************** */
 
 const getSingleUser = async (req: Request, res: Response) => {
-  await User.find({ isbn: req.params.userId }).then((data) => {
+  await User.findById(req.params.userId).then((data) => {
     res.json(data);
   });
 };
@@ -31,10 +31,8 @@ const patchSingleUser = (req: Request, res: Response) => {
 };
 
 const deleteSingleUser = async (req: Request, res: Response) => {
-  await User.deleteOne({ isbn: req.params.userId })
-    .then
-    // console.log("successfully deleted")
-    ();
+  await User.findOneAndDelete({ _id: req.params.userId }).then;
+  console.log(await User.countDocuments({ _id: req.params.userId })); // 0
 };
 
 export default {
@@ -59,7 +57,7 @@ export default {
 //     lastname,
 //     email,
 //     role
-    
+
 //   }).then((data) => {
 //     res.json(data);
 //   });
