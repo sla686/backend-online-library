@@ -3,6 +3,7 @@ import { CustomError } from "ErrorType";
 import uuid from "uuid4";
 import BookType from "BookType";
 import Book from "../models/books";
+import { isObjectIdOrHexString } from "mongoose";
 
 const getAllBooks = async (req: Request, res: Response) => {
   const books = await Book.find();
@@ -34,11 +35,15 @@ const getSingleBook = async (req: Request, res: Response) => {
 const patchSinglebook = async (req: Request, res: Response) => {
   const id = req.params.bookId;
   const postBookData: BookType = req.body;
-  const book = await Book.findByIdAndUpdate(id, postBookData, { new: true });
-  if (book) {
-    res.send(book);
-  }
+
+  // if (ObjectId.isValid(req.params.id)) {}
+
+  // const book = await Book.findByIdAndUpdate(id, postBookData, { new: true });
+  // if (book) {
+  //   res.send(book);
+  // }
 };
+
 const deleteSinglebook = async (req: Request, res: Response) => {
   const bookId = req.params.bookId;
   await Book.deleteOne({ isbn: req.params.bookId });
