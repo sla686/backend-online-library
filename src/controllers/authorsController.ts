@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CustomError } from "ErrorType";
+import { CustomError } from "../types/ErrorType";
 
 const getAllAuthors = (req: Request, res: Response) => {
   return res.send("Authors list");

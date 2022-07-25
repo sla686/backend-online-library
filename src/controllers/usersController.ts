@@ -1,38 +1,91 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import { CustomError } from "ErrorType";
 import User from "../models/Users";
 
-const getAllUsers = async (req: Request, res: Response) => {
-  const users = await User.find();
-  res.json(users);
+const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (e) {
+    return next(e);
+  }
 };
-const postUsers = async (req: Request, res: Response) => {
-  const { firstname, lastname, email, password, role } = req.body;
-  const newBook = await User.create({
-    firstname,
-    lastname,
-    email,
-    password,
-    role,
-  }).then((data) => {
-    res.json(data);
-  });
+const postUsers = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    let { firstname, lastname, email, password, role } = req.body;
+    let hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
+      firstname,
+      lastname,
+      email,
+      hashedPassword,
+      role,
+    }).then((data) => {
+      res.json(data);
+    });
+  } catch (e) {
+    return next(e);
+  }
 };
 /********************SINGLE USER *********************** */
 
-const getSingleUser = async (req: Request, res: Response) => {
-  await User.findById(req.params.userId).then((data) => {
-    res.json(data);
-  });
+const getSingleUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await User.findById(req.params.userId).then((data) => {
+      res.json(data);
+    });
+  } catch (e) {
+    return next(e);
+  }
 };
 
-const patchSingleUser = (req: Request, res: Response) => {
-  return res.send("patch method for single book");
+const loginToken = async (req: Request, res: Response) => {
+  try {
+    const user = req.body.user;
+    const token = jwt.sign(req.body.user, "mysecretkey", {
+      algorithm: "RS256",
+    });
+    console.log(token);
+    return res.status(200).send(token);
+  } catch (e: any) {
+    res.status(400).send(e.message);
+  }
 };
 
-const deleteSingleUser = async (req: Request, res: Response) => {
-  await User.findOneAndRemove({ _id: req.params.userId }).then;
-  console.log(await User.countDocuments({ _id: req.params.userId })); // 0
+const patchSingleUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.userId;
+    const postUserData = req.body;
+
+    const user = await User.findByIdAndUpdate(id, postUserData, { new: true });
+    res.status(200).send(User);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const deleteSingleUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await User.findOneAndRemove({ _id: req.params.userId }).then;
+    console.log(await User.countDocuments({ _id: req.params.userId })); // 0
+    return res.status(200).send("the user was deleted.");
+  } catch (e) {
+    return next(e);
+  }
 };
 
 export default {
