@@ -3,7 +3,6 @@ import { CustomError } from "ErrorType";
 import uuid from "uuid4";
 import BookType from "BookType";
 import Book from "../models/books";
-import { isObjectIdOrHexString } from "mongoose";
 
 const getAllBooks = async (req: Request, res: Response) => {
   const books = await Book.find();
