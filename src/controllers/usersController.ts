@@ -31,7 +31,7 @@ const patchSingleUser = (req: Request, res: Response) => {
 };
 
 const deleteSingleUser = async (req: Request, res: Response) => {
-  await User.findOneAndDelete({ _id: req.params.userId }).then;
+  await User.findOneAndRemove({ _id: req.params.userId }).then;
   console.log(await User.countDocuments({ _id: req.params.userId })); // 0
 };
 

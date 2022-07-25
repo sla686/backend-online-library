@@ -34,19 +34,15 @@ const getSingleBook = async (req: Request, res: Response) => {
 
 const patchSinglebook = async (req: Request, res: Response) => {
   const id = req.params.bookId;
-  const postBookData: BookType = req.body;
+  const postBookData = req.body;
 
-  // if (ObjectId.isValid(req.params.id)) {}
-
-  // const book = await Book.findByIdAndUpdate(id, postBookData, { new: true });
-  // if (book) {
-  //   res.send(book);
-  // }
+  const book = await Book.findByIdAndUpdate(id, postBookData, { new: true });
+  res.send(book);
 };
 
 const deleteSinglebook = async (req: Request, res: Response) => {
   const bookId = req.params.bookId;
-  await Book.deleteOne({ isbn: req.params.bookId });
+  await Book.deleteOne({ isbn: bookId });
 
   console.log(await Book.countDocuments({ isbn: bookId })); // 0
 };
